@@ -1,3 +1,6 @@
+{% extends 'base/main_style.html' %}
+{% block content %}
+
 
 {% if request.user.is_authenticated %}
     <p>{{request.user}}</p>
@@ -19,7 +22,9 @@
     {% for task in tasks %}
     <tr>
         <td>{{task.title}}</td>
-        <td><a href="{% url 'task' task.id%}">View</a></td>
+        <!-- VIEW PAGE -->
+        <!-- <td><a href="{% url 'task' task.id%}">View</a></td> -->
+        <!--  -->
         <td><a href="{% url 'task-update' task.id%}">Edit</a></td>
         <td><a href="{% url 'task-delete' task.id%}">Delete</a></td>
 
@@ -29,3 +34,5 @@
         <h3>No items in list</h3>
     {% endfor %}
 </table>
+
+{% endblock content %}
