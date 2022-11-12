@@ -14,25 +14,63 @@
 <a href="{% url 'task-create' %}">Add Task</a>
 
 <table>
+    {% if not tasks %}
+    <h3>No items in list</h3>
+    {% else %}
     <tr>
         <th>Item</th>
+        <th>Start Date</th>
+        <th>Start Time</th>
+        <th>End Date</th>
+        <th>End Time</th>
+        <th>Completion</th>
         <th></th>
         <th></th>
+    
     </tr>
-    {% for task in tasks %}
+        {% for task in tasks %}
     <tr>
         <td>{{task.title}}</td>
         <!-- VIEW PAGE -->
         <!-- <td><a href="{% url 'task' task.id%}">View</a></td> -->
         <!--  -->
-        <td><a href="{% url 'task-update' task.id%}">Edit</a></td>
-        <td><a href="{% url 'task-delete' task.id%}">Delete</a></td>
+        {% if task.start_date != null %}
+        <td>{{task.start_date}}</td>
+        {% else %}
+        <td></td>
+        {% endif %}
 
+        {% if task.start_date_time != null %}
+        <td>{{task.start_date_time}}</td>
+        {% else %}
+        <td></td>
+        {% endif %}
 
+        {% if task.end_date != null %}
+        <td>{{task.end_date}}</td>
+        {% else %}
+        <td></td>
+        {% endif %}
+
+        {% if task.end_date_time != null %}
+        <td>{{task.end_date_time}}</td>
+        {% else %}
+        <td></td>
+        {% endif %}
+
+        {% if task.complete != False %}
+        <td> Needs to be completed</td>
+        {% else %}
+        <td> Completed</td>
+        {% endif %}
+
+        <td><a id='edit-icon', href="{% url 'task-update' task.id%}">&#9998;</a></td>
+        <td><a id='delete-icon', href="{% url 'task-delete' task.id%}"><i class='fa-solid fa-trash-can' style='color: red'></i></a></td>
+        <!-- &#215; -->
     </tr>
-    {% empty %}
-        <h3>No items in list</h3>
     {% endfor %}
+    
+    {% endif %}
 </table>
 
 {% endblock content %}

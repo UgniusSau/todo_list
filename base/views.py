@@ -10,6 +10,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 
 from .models import Task
+from .forms import CreateForm
+
 
 class CustomLoginView(LoginView):
     template_name = 'base/login.html'
@@ -54,19 +56,45 @@ class TaskDetail(LoginRequiredMixin, DetailView):
     context_object_name = 'task'
     template_name = 'base/task.html'
 
-class TaskCreate(LoginRequiredMixin, CreateView):
-    model = Task
-    fields = ['title', 'description', 'complete']
-    success_url = reverse_lazy('tasks')
+# class TaskCreate(LoginRequiredMixin, CreateView):
+#     model = Task
+#     fields = ['title', 'start_date', 'end_date', 'complete']
 
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super(TaskCreate, self).form_valid(form)
+#     success_url = reverse_lazy('tasks')
+#     form = ExampleForm()
+#     def form_valid(self, form):
+#         form.instance.user = self.request.user
+#         return super(TaskCreate, self).form_valid(form)
 
-class TaskUpdate(LoginRequiredMixin, UpdateView):
-    model = Task
-    fields = ['title', 'description', 'complete']
-    success_url = reverse_lazy('tasks')
+def CreateTask(request):
+    form = CreateForm()
+    if request.method == 'POST':
+        form = CreateForm(request.POST)
+        form.instance.user = request.user
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+    context = {'form': form}
+    return render(request, 'base/task_form.html', context)
+
+# class TaskUpdate(LoginRequiredMixin, UpdateView):
+#     model = Task
+#     fields = ['title', 'start_date', 'start_date_time', 'end_date','end_date_time', 'complete']
+#     success_url = reverse_lazy('tasks')
+
+def UpdateTask(request, pk):
+    task = Task.objects.get(id=pk)
+    form = CreateForm(instance=task)
+
+    if request.method == 'POST':
+        form = CreateForm(request.POST, instance=task)
+        form.instance.user = request.user
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+
+    context = {'form':form}
+    return render(request, 'base/task_form.html', context)
 
 class DeleteView(LoginRequiredMixin, DeleteView):
     model = Task
