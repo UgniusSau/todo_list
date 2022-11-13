@@ -1,11 +1,51 @@
 {% extends 'base/main_style.html' %}
+
+{% load crispy_forms_tags %}
+
 {% block content %}
 <h3>Task Form</h3>
-<a href="{% url 'tasks' %}">Go back</a>
+<a href="{% url 'tasks' %}">&#8592; Go Back</a>
 
 <form method="POST" action="">
     {% csrf_token %}
-    {{form.as_p}}
-    <input type="submit" value="Submit">
+    <!-- {{form|crispy}}
+     -->
+     <div class="form-row">
+        <div class="form-group col-sm6 col-md-4">
+            {{ form.title|as_crispy_field }}
+        </div>
+     </div>
+
+     <div class="form-row">
+        <div class="form-group col-sm-4 col-md-2">
+            {{ form.start_date|as_crispy_field }}
+        </div>
+     </div>
+
+     <div class="form-row">
+        <div class="form-group col-sm-4 col-md-2">
+            {{ form.start_date_time|as_crispy_field }}
+        </div>
+     </div>
+
+     <div class="form-row">
+        <div class="form-group col-sm-4 col-md-2">
+            {{ form.end_date|as_crispy_field }}
+        </div>
+     </div>
+
+     <div class="form-row">
+        <div class="form-group col-sm-4 col-md-2">
+            {{ form.end_date_time|as_crispy_field }}
+        </div>
+     </div>
+
+     <div class="form-row">
+        <div class="form-group">
+            {{ form.complete|as_crispy_field }}
+        </div>
+     </div>
+
+    <button class="btn btn-outline-dark">Submit</button>
 </form>
 {% endblock content %}

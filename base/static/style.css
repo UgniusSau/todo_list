@@ -1,3 +1,53 @@
 body {
-    background-color: aqua;
+    background-color: #00DBDE;
+    background-image: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%); 
+    font-family: 'Nonito', sans-serif;
+    padding-top: 50px;
   }
+
+a {
+  text-decoration: none;
+  color:forestgreen
+}
+
+#edit-icon{
+  color: yellow;
+}
+
+#delete-icon, #edit-icon{
+  font-size:large;
+} 
+
+.header-bar {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border: black;
+    border-style: ridge;
+    /* border-radius: 5px 5px 0 0; */
+    /* background: rgb(13, 15, 20); */
+    /* background: linear-gradient(90deg #EEA390 0%, #EB796F 43%, #EB796F 100%); */
+    width: 600px;
+}
+
+#logout-ref{
+  font-size:large;
+  color: rgb(43, 102, 44);
+}
+
+.form-row{
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  margin: 0 auto;
+}
+
+
+
+
+
+
+
+
+
+

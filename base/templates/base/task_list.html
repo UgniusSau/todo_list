@@ -1,23 +1,29 @@
 {% extends 'base/main_style.html' %}
 {% block content %}
 
+<div class="header-bar rounded">
+    <div>
+        <h1>Hello {{request.user|title}}</h1>
+        <h3 style = margin:0> You have <i>{{count}}</i> incomplete task{{ count|pluralize:"s"}}</h3>
+    </div>
+    {% if request.user.is_authenticated %}
+    <a id ='logout-ref' href="{% url 'logout' %}">Logout <i class="fa fa-sign-out" style="font-size:24px"></i></a>
+    {% else %}
+    <a href="{% url 'login' %}">Login</i></a>
+    {% endif %}
+</div>
 
-{% if request.user.is_authenticated %}
-    <p>{{request.user}}</p>
-    <a href="{% url 'logout' %}">Logout</a>
-{% else %}
-<a href="{% url 'login' %}">Login</a>
-{% endif %}
 
 <hr>
 <h1> My To Do List </h1>
-<a href="{% url 'task-create' %}">Add Task</a>
+<a href="{% url 'task-create' %}">&#10133; New Task</a>
 
-<table>
+<table class="table table-dark table-hover">
     {% if not tasks %}
     <h3>No items in list</h3>
     {% else %}
     <tr>
+        <th>Num</th>
         <th>Item</th>
         <th>Start Date</th>
         <th>Start Time</th>
@@ -28,8 +34,10 @@
         <th></th>
     
     </tr>
-        {% for task in tasks %}
+        
+    {% for task in tasks %}
     <tr>
+        <td>{{forloop.counter}}</td>
         <td>{{task.title}}</td>
         <!-- VIEW PAGE -->
         <!-- <td><a href="{% url 'task' task.id%}">View</a></td> -->
@@ -58,10 +66,10 @@
         <td></td>
         {% endif %}
 
-        {% if task.complete != False %}
-        <td> Needs to be completed</td>
+        {% if task.complete == False %}
+        <td> Needs to be completed <i class="fa fa-clock-o" style="font-size:20px;color:red"></i></td>
         {% else %}
-        <td> Completed</td>
+        <td> Completed <b><i style="color:green; font-size:20px">&#10003;</i></b></td>
         {% endif %}
 
         <td><a id='edit-icon', href="{% url 'task-update' task.id%}">&#9998;</a></td>

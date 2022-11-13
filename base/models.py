@@ -23,4 +23,4 @@ class Task(models.Model):
         return self.title
 
     class Meta:
-        ordering = ['complete']
+        ordering = ['complete','end_date', 'end_date_time']
